@@ -14,8 +14,11 @@ deps = [
   dependency('libadwaita-1'),
 ]
 
-blueprints = custom_target('style-switcher-blueprints',
-  input: files('../../../blp/adw/style-switcher.blp'),
+
+blueprint_targets = []
+
+blueprint_targets += custom_target('style-switcher-blueprints',
+  input: files('../../../blp/adw/style-switcher/style-switcher.blp'),
   output: 'style-switcher.ui',
   command: [
     find_program('blueprint-compiler'),
@@ -25,11 +28,22 @@ blueprints = custom_target('style-switcher-blueprints',
   ],
 )
 
+blueprint_targets += custom_target('style-switcher-blueprints-window',
+  input: files('../../../blp/adw/style-switcher/window.blp'),
+  output: 'window.ui',
+  command: [
+    find_program('blueprint-compiler'),
+    'compile',
+    '--output', '@OUTPUT@',
+    '@INPUT@'
+  ],
+)
 
+# Compile resources, depending on all blueprint targets
 sources += gnome.compile_resources('style-switcher-resources',
   'style-switcher.gresource.xml',
   c_name: 'style_switcher',
-  dependencies: blueprints,
+  dependencies: blueprint_targets,
   source_dir: meson.current_build_dir(),
 )
 
