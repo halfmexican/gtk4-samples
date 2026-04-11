@@ -15,35 +15,19 @@ deps = [
 ]
 
 
-blueprint_targets = []
-
-blueprint_targets += custom_target('style-switcher-blueprints',
-  input: files('../../../blp/adw/style-switcher/style-switcher.blp'),
-  output: 'style-switcher.ui',
-  command: [
-    find_program('blueprint-compiler'),
-    'compile',
-    '--output', '@OUTPUT@',
-    '@INPUT@'
-  ],
+blueprints = custom_target('blueprints',
+  input: files(
+    'style-switcher.blp',
+    'window.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-blueprint_targets += custom_target('style-switcher-blueprints-window',
-  input: files('../../../blp/adw/style-switcher/window.blp'),
-  output: 'window.ui',
-  command: [
-    find_program('blueprint-compiler'),
-    'compile',
-    '--output', '@OUTPUT@',
-    '@INPUT@'
-  ],
-)
-
-# Compile resources, depending on all blueprint targets
 sources += gnome.compile_resources('style-switcher-resources',
   'style-switcher.gresource.xml',
   c_name: 'style_switcher',
-  dependencies: blueprint_targets,
+  dependencies: blueprints,
   source_dir: meson.current_build_dir(),
 )
 
