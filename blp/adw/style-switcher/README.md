@@ -1,5 +1,5 @@
 # Style Switcher Sample
-- Adds radio butttons to control coloscheme to the primary menu
+- Adds radio butttons to control Adwaita color scheme to the primary menu
 
 ## Requirements
 
