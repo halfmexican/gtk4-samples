@@ -1,10 +1,9 @@
-
 .style-switcher {
   padding: 6px;
 }
 
 .style-switcher .check {
-  background: var(--accent-bg-color); /*named colors are deprecated, will update*/
+  background: var(--accent-bg-color);
   color: var(--accent-fg-color);
   padding: 2px;
   border-radius: 17px;
